@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FindIT - Lost & Found System</title>
+</head>
+
+<body>
+
+    <h1>FindIT: Lost & Found System</h1>
+
+    <p>Find and report lost and found items.</p>
+
+    <a href="{% url 'add_item' %}">
+        <button>Add Lost/Found Item</button>
+    </a>
+
+    <hr>
+
+    <h2>Lost & Found Items</h2>
+
+    {% if items %}
+
+        {% for item in items %}
+
+            <div>
+                <h3>{{ item.item_name }}</h3>
+
+                <p><strong>Category:</strong> {{ item.category }}</p>
+                <p><strong>Lost/Found:</strong> {{ item.lost_found_status }}</p>
+                <p><strong>Location:</strong> {{ item.location }}</p>
+                <p><strong>Date Reported:</strong> {{ item.date_reported }}</p>
+                <p><strong>Item Status:</strong> {{ item.item_status }}</p>
+
+                <a href="{% url 'item_detail' item.id %}">
+                    View Details
+                </a>
+                |
+                <a href="{% url 'edit_item' item.id %}">
+                    Edit
+                </a>
+                |
+                <a href="{% url 'delete_item' item.id %}">
+                    Delete
+                </a>
+            </div>
+
+            <hr>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No lost or found items have been reported yet.</p>
+
+    {% endif %}
+
+</body>
+</html>

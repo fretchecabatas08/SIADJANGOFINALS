@@ -1,0 +1,301 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FindIT - Report Item</title>
+
+    <link rel="stylesheet"
+          href="{% static 'chay_id/style.css' %}">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+
+        <div class="logo">
+            Find<span>IT</span>
+        </div>
+
+        <a href="{% url 'index' %}" class="nav-link">
+            Home
+        </a>
+
+    </nav>
+
+
+    <!-- Page -->
+    <main class="form-page">
+
+        <div class="form-container">
+
+            <!-- Header -->
+            <div class="form-header">
+
+                <h1>
+                    Report Lost or Found Item
+                </h1>
+
+                <p>
+                    Enter the details of the lost or found item below.
+                    The more information you provide, the easier it will
+                    be to return the item to its owner.
+                </p>
+
+                <div class="form-line"></div>
+
+            </div>
+
+
+            <!-- Form -->
+            <form method="POST" enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+
+                <div class="form-grid">
+
+
+                    <!-- Item Name -->
+                    <div class="form-group">
+
+                        <label>
+                            Item Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="item_name"
+                            placeholder="Example: Black Wallet"
+                            required
+                        >
+
+                    </div>
+                     <div class="form-group">
+        <label>Item Photo</label>
+        <input type="file"
+               name="item_photo"
+               accept="image/*">
+        <small>Upload a photo of the lost or found item.</small>
+    </div>
+
+
+                    <!-- Description -->
+                    <div class="form-group">
+
+                        <label>
+                            Description
+                        </label>
+
+                        <textarea
+                            name="description"
+                            placeholder="Describe the item..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <!-- Category -->
+                    <div class="form-group">
+
+                        <label>
+                            Category
+                        </label>
+
+                        <input
+                            type="text"
+                            name="category"
+                            placeholder="Example: Electronics, Personal Item"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Lost / Found -->
+                    <div class="form-group">
+
+                        <label>
+                            Lost / Found
+                        </label>
+
+                        <select
+                            name="lost_found_status"
+                            required
+                        >
+
+                            <option value="">
+                                -- Select --
+                            </option>
+
+                            <option value="Lost">
+                                Lost
+                            </option>
+
+                            <option value="Found">
+                                Found
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- Date -->
+                    <div class="form-group">
+
+                        <label>
+                            Date Reported
+                        </label>
+
+                        <input
+                            type="date"
+                            name="date_reported"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Location -->
+                    <div class="form-group">
+
+                        <label>
+                            Location
+                        </label>
+
+                        <input
+                            type="text"
+                            name="location"
+                            placeholder="Example: School Library"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Color -->
+                    <div class="form-group">
+
+                        <label>
+                            Color
+                        </label>
+
+                        <input
+                            type="text"
+                            name="color"
+                            placeholder="Example: Black"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Reporter -->
+                    <div class="form-group">
+
+                        <label>
+                            Owner / Reporter Name
+                        </label>
+
+                        <input
+                            type="text"
+                            name="reporter_name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Contact -->
+                    <div class="form-group">
+
+                        <label>
+                            Contact Information
+                        </label>
+
+                        <input
+                            type="text"
+                            name="contact_information"
+                            placeholder="Email or phone number"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- Item Status -->
+                    <div class="form-group">
+
+                        <label>
+                            Item Status
+                        </label>
+
+                        <select
+                            name="item_status"
+                            required
+                        >
+
+                            <option value="Lost">
+                                Lost
+                            </option>
+
+                            <option value="Found">
+                                Found
+                            </option>
+
+                            <option value="Claimed">
+                                Claimed
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="form-actions">
+
+                    <button
+                        type="submit"
+                        class="btn btn-submit"
+                    >
+                        Submit Report
+                    </button>
+
+
+                    <a
+                        href="{% url 'index' %}"
+                        class="btn btn-cancel"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+
+            <!-- Footer -->
+            <div class="form-footer">
+                Lost things find their way home.
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

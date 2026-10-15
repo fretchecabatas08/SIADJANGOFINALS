@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindIT - {{ item.item_name }}</title>
+    <link rel="stylesheet" href="{% static 'chay_id/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Find<span>IT</span></div>
+        <a href="{% url 'index' %}" class="nav-link">Dashboard</a>
+    </nav>
+
+    <main class="home-page">
+        <div class="home-container">
+            <section class="items-section">
+                <div class="items-heading">
+                    <h2>Item Details</h2>
+                </div>
+
+                <article class="item-card">
+
+    {% if item.item_photo %}
+        <img src="{{ item.item_photo.url }}"
+             alt="{{ item.item_name }}"
+             class="detail-item-photo">
+    {% else %}
+        <div class="detail-no-photo">
+            No Photo Available
+        </div>
+    {% endif %}
+
+    {% if item.lost_found_status == 'Lost' %}
+                        <span class="badge badge-lost">LOST</span>
+                    {% else %}
+                        <span class="badge badge-found">FOUND</span>
+                    {% endif %}
+                    <h3>{{ item.item_name }}</h3>
+                    <div class="item-info">
+                        <p><strong>Description:</strong> {{ item.description }}</p>
+                        <p><strong>Category:</strong> {{ item.category }}</p>
+                        <p><strong>Lost/Found Status:</strong> {{ item.get_lost_found_status_display }}</p>
+                        <p><strong>Date Reported:</strong> {{ item.date_reported }}</p>
+                        <p><strong>Location:</strong> {{ item.location }}</p>
+                        <p><strong>Color:</strong> {{ item.color }}</p>
+                        <p><strong>Owner/Reporter Name:</strong> {{ item.reporter_name }}</p>
+                        <p><strong>Contact Information:</strong> {{ item.contact_information }}</p>
+                        <p><strong>Item Status:</strong> {{ item.get_item_status_display }}</p>
+                    </div>
+
+                    <div class="item-actions">
+                        <a href="{% url 'index' %}" class="btn btn-cancel">Back to Dashboard</a>
+                        <a href="{% url 'edit_item' item.id %}" class="btn btn-edit">Edit</a>
+                        <a href="{% url 'delete_item' item.id %}" class="btn btn-delete">Delete</a>
+                    </div>
+                </article>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

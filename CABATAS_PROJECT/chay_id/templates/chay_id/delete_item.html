@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindIT - Delete Item</title>
+    <link rel="stylesheet" href="{% static 'chay_id/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Find<span>IT</span></div>
+        <a href="{% url 'index' %}" class="nav-link">Dashboard</a>
+    </nav>
+
+    <main class="form-page">
+        <div class="form-container">
+            <div class="form-header">
+                <h1>Delete Item</h1>
+                <p>Are you sure you want to delete <strong>{{ item.item_name }}</strong>? This action cannot be undone.</p>
+                <div class="form-line"></div>
+            </div>
+
+            <div class="item-info">
+                <p><strong>Category:</strong> {{ item.category }}</p>
+                <p><strong>Location:</strong> {{ item.location }}</p>
+                <p><strong>Status:</strong> {{ item.item_status }}</p>
+            </div>
+
+            <form method="POST" action="{% url 'delete_item' item.id %}">
+                {% csrf_token %}
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-delete">Yes, Delete</button>
+                    <a href="{% url 'item_detail' item.id %}" class="btn btn-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

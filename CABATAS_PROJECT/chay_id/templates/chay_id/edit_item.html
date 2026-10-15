@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FindIT - Edit Item</title>
+    <link rel="stylesheet" href="{% static 'chay_id/style.css' %}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Find<span>IT</span></div>
+        <a href="{% url 'index' %}" class="nav-link">Dashboard</a>
+    </nav>
+
+    <main class="form-page">
+        <div class="form-container">
+            <div class="form-header">
+                <h1>Edit Lost/Found Item</h1>
+                <p>Update the information for {{ item.item_name }}.</p>
+                <div class="form-line"></div>
+            </div>
+
+           <form method="POST" enctype="multipart/form-data">
+            {% if item.item_photo %}
+    <div class="current-photo">
+        <p><strong>Current Photo:</strong></p>
+        <img src="{{ item.item_photo.url }}"
+             alt="{{ item.item_name }}"
+             class="edit-item-photo">
+    </div>
+{% endif %}
+ <label>Change Photo:</label><br>
+    <input type="file" name="item_photo" accept="image/*">
+    <br><br>
+
+    <label>Item Name:</label><br>
+    <input type="text" name="item_name" value="{{ item.item_name }}" required>
+    
+                {% csrf_token %}
+                {{ form.non_field_errors }}
+                <div class="form-grid">
+                    {% for field in form %}
+                        <div class="form-group{% if field.name == 'description' %} full-width{% endif %}">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {{ field.errors }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-submit">Save Changes</button>
+                    <a href="{% url 'item_detail' item.id %}" class="btn btn-cancel">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

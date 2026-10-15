@@ -1,0 +1,246 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FindIT - Lost & Found System</title>
+
+    <link rel="stylesheet"
+          href="{% static 'chay_id/style.css' %}">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+
+        <div class="logo">
+            Find<span>IT</span>
+        </div>
+
+        <a href="{% url 'add_item' %}"
+           class="nav-link">
+            Report Item
+        </a>
+
+    </nav>
+
+
+    <!-- Homepage -->
+    <main class="home-page">
+
+        <div class="home-container">
+
+
+            <!-- Hero -->
+            <section class="home-hero">
+
+                <h1>
+                    FindIT: Lost & Found System
+                </h1>
+
+                <p>
+                    A simple and organized way to report,
+                    find, and manage lost and found items.
+                    Help items find their way back to their owners.
+                </p>
+
+                <a href="{% url 'add_item' %}"
+                   class="btn">
+                    + Report Lost/Found Item
+                </a>
+
+            </section>
+
+
+            <!-- Items -->
+            <section class="items-section">
+
+                <div class="items-heading">
+
+                    <h2>
+                        Lost & Found Items
+                    </h2>
+
+                    {% if items %}
+
+                        <span class="item-count">
+                            {{ items|length }}
+                            Item{{ items|length|pluralize }}
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                {% if items %}
+
+                    <div class="item-grid">
+
+                        {% for item in items %}
+
+                            <div class="item-card">
+
+    <!-- Item Photo -->
+    {% if item.item_photo %}
+        <img src="{{ item.item_photo.url }}"
+             alt="{{ item.item_name }}"
+             class="item-card-photo">
+    {% else %}
+        <div class="item-card-no-photo">
+            No Photo
+        </div>
+    {% endif %}
+
+    <!-- Lost / Found Status -->
+                                {% if item.lost_found_status == "Lost" %}
+
+                                    <span class="badge badge-lost">
+                                        LOST
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge badge-found">
+                                        FOUND
+                                    </span>
+
+                                {% endif %}
+
+
+                                <!-- Item Name -->
+                                <h3>
+                                    {{ item.item_name }}
+                                </h3>
+
+
+                                <!-- Description -->
+                                <p class="item-description">
+                                    {{ item.description|truncatechars:90 }}
+                                </p>
+
+
+                                <!-- Information -->
+                                <div class="item-info">
+
+                                    <p>
+                                        <strong>Category:</strong>
+                                        {{ item.category }}
+                                    </p>
+
+                                    <p>
+                                        <strong>Location:</strong>
+                                        {{ item.location }}
+                                    </p>
+
+                                    <p>
+                                        <strong>Date:</strong>
+                                        {{ item.date_reported }}
+                                    </p>
+
+                                    <p>
+                                        <strong>Color:</strong>
+                                        {{ item.color }}
+                                    </p>
+
+                                    <!-- Reporter -->
+                                    <p>
+                                        <strong>Reporter:</strong>
+                                        {{ item.reporter_name }}
+                                    </p>
+
+
+                                    <!-- Item Status -->
+                                    {% if item.item_status == "Claimed" %}
+
+                                        <span class="badge badge-claimed">
+                                            CLAIMED
+                                        </span>
+
+                                    {% elif item.item_status == "Found" %}
+
+                                        <span class="badge badge-found">
+                                            FOUND
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge badge-lost">
+                                            LOST
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <!-- Actions -->
+                                <div class="item-actions">
+
+                                    <a href="{% url 'item_detail' item.id %}"
+                                       class="btn btn-view">
+                                        View
+                                    </a>
+
+                                    <a href="{% url 'edit_item' item.id %}"
+                                       class="btn btn-edit">
+                                        Edit
+                                    </a>
+
+                                    <a href="{% url 'delete_item' item.id %}"
+                                       class="btn btn-delete">
+                                        Delete
+                                    </a>
+
+                                </div>
+
+
+                            </div>
+
+                        {% endfor %}
+
+                    </div>
+
+
+                {% else %}
+
+
+                    <!-- Empty State -->
+                    <div class="empty-items">
+
+                        <h3>
+                            No Lost or Found Items Yet
+                        </h3>
+
+                        <p>
+                            There are currently no items reported
+                            in the system.
+                        </p>
+
+                        <a href="{% url 'add_item' %}"
+                           class="btn btn-submit">
+                            Report the First Item
+                        </a>
+
+                    </div>
+
+
+                {% endif %}
+
+            </section>
+
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>
